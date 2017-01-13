@@ -1,0 +1,15 @@
+{application, odoor,
+ [{description, "Odoo Erlang low-level client"},
+  {vsn, "0.1.0"},
+  {registered, []},
+  {applications,
+   [kernel,
+    stdlib,
+    xerlrpc
+   ]},
+  {env,[]},
+  {modules, []},
+  {maintainers, ["Neurotec"]},
+  {licenses, ["GPLv3"]},
+  {links, [{"Github", "https://github.com/Neurotec/odoor"}]}
+ ]}.
