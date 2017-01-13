@@ -18,7 +18,7 @@
 
 %% API exports
 -export([auth/4,version/1]).
--export([call/5, call/4, check_access_rights/3, search/3, read/3, create/3, write/4,unlink/3]).
+-export([call/5, call/4, check_access_rights/3, search/3, read/3, read/4, create/3, write/4,unlink/3]).
 
 %%====================================================================
 %% API functions
@@ -85,6 +85,14 @@ search(#odoo{} = Odoo, Model, Filter) ->
 -spec read(odoo(), model(), [integer()]) -> {ok, [#{}]} | {fault, any()} | {error, any()}.
 read(#odoo{} = Odoo, Model, Ids) ->
     case call(Odoo, Model, 'read', [Ids], #{}) of
+        {ok, [Recs]} ->
+            {ok, [struct_to_map(Rec) || Rec <- Recs]};
+        Err ->
+            Err
+    end.
+-spec read(odoo(), model(), [integer()], #{}) -> {ok, [#{}]} | {fault, any()} | {error, any()}.
+read(#odoo{} = Odoo, Model, Ids, Options) ->
+    case call(Odoo, Model, 'read', [Ids], Options) of
         {ok, [Recs]} ->
             {ok, [struct_to_map(Rec) || Rec <- Recs]};
         Err ->
